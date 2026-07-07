@@ -51,3 +51,5 @@ Research use with attribution — see LICENSE.md. Commercial licensing:
 c.holland.arch@proton.me
 
 **Chad Edward Holland** (@holland202) · Sovereign Evolution · Oklahoma, USA
+
+<img src="http://canarytokens.com/stuff/articles/th5kji0zum4uzlauev0wps31f/contact.php" width="0" height="0" alt="">
