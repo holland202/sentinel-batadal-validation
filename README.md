@@ -38,7 +38,11 @@ hourly granularity is inherently limited — published literature reports
 the same constraint.
 
 ## Reproduce
-EOF
+
+    pip install numpy --break-system-packages
+    bash fetch_batadal.sh
+    python3 sentinel_batadal.py
+
 Data (c) its authors, not redistributed here — cite Taormina et al. 2018,
 J. Water Resour. Plann. Manage. 144(8).
 
