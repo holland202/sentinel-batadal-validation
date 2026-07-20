@@ -1,6 +1,12 @@
 # SENTINEL x BATADAL — Public Benchmark Validation
 *Vincit Omnia Veritas — Truth Conquers All.*
 
+
+![SENTINEL x BATADAL results](sentinel_results.png)
+
+
+
+
 Independent validation of SENTINEL's detection method — two-window
 Jensen-Shannon divergence change detection on per-channel sensor
 histograms — against the public BATADAL water-distribution attack
