@@ -4,6 +4,8 @@
 
 ![SENTINEL x BATADAL results](sentinel_results.png)
 
+*Left panel y-axis is **tick recall** (attack ticks flagged / total attack ticks); the axis label reads "episode recall" and is wrong -- it will be corrected when the figure is regenerated. Episode counts are in the table below.*
+
 
 
 
@@ -20,11 +22,13 @@ where the production detector drops in. Thresholds auto-calibrate from
 clean data (99.5th percentile) — no proprietary constants anywhere.
 
 ## Detection results (live runs, test set: 2,089 records, 7 attacks)
-| Profile | samples/bin | Episodes | Recall | F1 |
+| Profile | samples/bin | Episodes | Tick recall | F1 |
 |---|---|---|---|---|
 | Conservative (w=100,b=12) | 8.33 | 2/7 | 20.9% | 0.251 |
 | Balanced (w=60,b=16) | 3.75 | 4/7 | 15.2% | 0.225 |
 | Aggressive (w=30,b=16) | 1.88 | 3/7 | 1.2% | 0.023 |
+
+**Definitions.** *Episodes* = attack episodes with at least one flagged tick (of 7). *Tick recall* = TP/(TP+FN) over labeled attack ticks. These measure different things, so a profile can detect more episodes at lower tick recall.
 
 The histogram under-sampling failure mode is real and reproduced on
 external labeled data: at 1.88 samples/bin, recall collapses to ~1%.
