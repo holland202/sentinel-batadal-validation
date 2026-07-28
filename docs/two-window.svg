@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1040 560" width="1040" height="560" font-family="ui-monospace, 'SF Mono', Menlo, Consolas, monospace">
+  <rect width="1040" height="560" fill="#eef1f3"/>
+
+  <text x="40" y="46" font-size="19" font-weight="700" fill="#16202b" letter-spacing="1.5">WHY TICK RECALL UNDERSTATES A CHANGE DETECTOR</text>
+  <text x="40" y="68" font-size="11.5" fill="#64757f">The detector compares the last W samples against the W before them. It sees transitions, not states.</text>
+  <line x1="40" y1="84" x2="1000" y2="84" stroke="#9fb0bd" stroke-width="1"/>
+
+  <!-- attack band spanning the whole figure -->
+  <rect x="550" y="100" width="450" height="336" fill="#b4442c" opacity="0.07"/>
+  <line x1="550" y1="100" x2="550" y2="436" stroke="#b4442c" stroke-width="1.4" stroke-dasharray="5 3"/>
+  <text x="558" y="116" font-size="10.5" font-weight="700" fill="#b4442c" letter-spacing="1.2">ATTACK BEGINS — AND CONTINUES</text>
+
+  <!-- ============ row A ============ -->
+  <text x="40" y="152" font-size="10" fill="#64757f" letter-spacing="1.2">EARLY</text>
+  <rect x="340" y="136" width="90" height="26" fill="#ffffff" stroke="#64757f" stroke-width="1.2"/>
+  <text x="385" y="153" font-size="10" fill="#64757f" text-anchor="middle">reference</text>
+  <rect x="430" y="136" width="90" height="26" fill="#d8e3e9" stroke="#2b6f8f" stroke-width="1.4"/>
+  <text x="475" y="153" font-size="10" fill="#2b6f8f" text-anchor="middle">current</text>
+  <text x="332" y="177" font-size="10.5" fill="#64757f" text-anchor="end">no change either side — score at the floor</text>
+
+  <!-- ============ row B ============ -->
+  <text x="40" y="222" font-size="10" fill="#64757f" letter-spacing="1.2">ONSET</text>
+  <rect x="460" y="206" width="90" height="26" fill="#ffffff" stroke="#64757f" stroke-width="1.2"/>
+  <text x="505" y="223" font-size="10" fill="#64757f" text-anchor="middle">reference</text>
+  <rect x="550" y="206" width="90" height="26" fill="#cfe0d9" stroke="#2f7d5e" stroke-width="2"/>
+  <text x="595" y="223" font-size="10" font-weight="700" fill="#2f7d5e" text-anchor="middle">current</text>
+  <text x="656" y="223" font-size="10.5" font-weight="700" fill="#2f7d5e">maximum contrast — ALARM</text>
+
+  <!-- ============ row C ============ -->
+  <text x="40" y="292" font-size="10" fill="#64757f" letter-spacing="1.2">SUSTAINED</text>
+  <rect x="640" y="276" width="90" height="26" fill="#f0dcd6" stroke="#b4442c" stroke-width="1.2"/>
+  <text x="685" y="293" font-size="10" fill="#b4442c" text-anchor="middle">reference</text>
+  <rect x="730" y="276" width="90" height="26" fill="#f0dcd6" stroke="#b4442c" stroke-width="2"/>
+  <text x="775" y="293" font-size="10" fill="#b4442c" text-anchor="middle">current</text>
+  <text x="836" y="293" font-size="10.5" font-weight="700" fill="#b4442c">both inside — SILENT</text>
+
+  <!-- bracket showing 2W -->
+  <path d="M640,312 L640,320 L820,320 L820,312" fill="none" stroke="#b4442c" stroke-width="1.2"/>
+  <text x="730" y="336" font-size="10" fill="#b4442c" text-anchor="middle">once the attack is older than 2W, both windows sit inside it</text>
+
+  <!-- ============ score trace ============ -->
+  <line x1="40" y1="360" x2="1000" y2="360" stroke="#9fb0bd" stroke-width="1"/>
+  <text x="40" y="382" font-size="9.5" fill="#64757f" letter-spacing="1.6">SCORE</text>
+
+  <line x1="100" y1="436" x2="1000" y2="436" stroke="#16202b" stroke-width="1.2"/>
+  <line x1="100" y1="410" x2="1000" y2="410" stroke="#64757f" stroke-width="1" stroke-dasharray="4 3"/>
+  <text x="104" y="406" font-size="9.5" fill="#64757f">threshold</text>
+
+  <path d="M100,430 L200,432 L280,428 L360,431 L440,429 L520,430 L560,424 L580,398
+           L600,378 L620,384 L640,396 L660,412 L690,424 L730,430 L790,428 L860,431
+           L920,429 L1000,430"
+        fill="none" stroke="#2b6f8f" stroke-width="2"/>
+
+  <rect x="550" y="372" width="110" height="64" fill="#2f7d5e" opacity="0.10"/>
+  <text x="605" y="452" font-size="10" font-weight="700" fill="#2f7d5e" text-anchor="middle">detected</text>
+
+  <rect x="680" y="372" width="320" height="64" fill="#b4442c" opacity="0.08"/>
+  <text x="840" y="452" font-size="10" font-weight="700" fill="#b4442c" text-anchor="middle">silent — these ticks all count as misses</text>
+
+  <!-- ============ measured ============ -->
+  <line x1="40" y1="474" x2="1000" y2="474" stroke="#9fb0bd" stroke-width="1"/>
+  <text x="40" y="498" font-size="9.5" fill="#64757f" letter-spacing="1.6">MEASURED, SAME DETECTOR, SAME 30 RUNS</text>
+  <text x="424" y="498" font-size="12" font-weight="700" fill="#b4442c">tick recall 48.8%</text>
+  <text x="586" y="498" font-size="11" fill="#64757f">vs</text>
+  <text x="618" y="498" font-size="12" font-weight="700" fill="#2f7d5e">episode detection 30/30</text>
+  <text x="40" y="524" font-size="10.5" fill="#64757f">This explains the metric. It does not rescue the ranking: scored on BATADAL's own rule the result is S = 0.432, still below every published entry.</text>
+  <text x="40" y="544" font-size="10" fill="#9fb0bd">Reproduce: python3 math_audit.py  ·  properties t14, t15</text>
+  <text x="880" y="544" font-size="10" fill="#64757f" font-style="italic">Vincit Omnia Veritas</text>
+</svg>
