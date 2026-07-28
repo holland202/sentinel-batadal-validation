@@ -13,7 +13,7 @@ import csv, sys
 import numpy as np
 
 
-def load(path):
+def load(path, stats=None):
     with open(path, newline="") as f:
         r = csv.reader(f)
         hdr = [h.strip() for h in next(r)]
@@ -23,12 +23,36 @@ def load(path):
     ai = hdr.index("ATT_FLAG")
     X = np.zeros((len(rows), len(idx)))
     y = np.zeros(len(rows), dtype=int)
+    coerced_x = coerced_y = unlabeled = 0
     for k, row in enumerate(rows):
         for j, i in enumerate(idx):
             try: X[k, j] = float(row[i])
-            except ValueError: pass
-        try: y[k] = 1 if float(row[ai]) >= 0.5 else 0
-        except ValueError: pass
+            except (ValueError, IndexError): coerced_x += 1
+        try:
+            v = float(row[ai])
+            # BATADAL rules sec 3.1: ATT_FLAG == -999 means UNLABELED, NOT safe.
+            # Treating it as 0 silently fabricates negatives (dataset04 has 3958).
+            if v == -999:
+                unlabeled += 1
+            else:
+                y[k] = 1 if v >= 0.5 else 0
+        except (ValueError, IndexError): coerced_y += 1
+    # Behaviour is unchanged -- an unparseable cell is still 0.0. The only
+    # difference is that it is now COUNTED and REPORTED rather than silent.
+    if stats is not None:
+        stats["coerced_x"] = stats.get("coerced_x", 0) + coerced_x
+        stats["coerced_y"] = stats.get("coerced_y", 0) + coerced_y
+        stats["rows"] = stats.get("rows", 0) + len(rows)
+        stats["unlabeled"] = stats.get("unlabeled", 0) + unlabeled
+    if coerced_x or coerced_y:
+        print(f"[WARN] {path}: {coerced_x} unparseable sensor cells and "
+              f"{coerced_y} unparseable labels were coerced to 0. "
+              f"Published numbers assume this count is zero.", file=sys.stderr)
+    if unlabeled:
+        print(f"[WARN] {path}: {unlabeled} rows carry ATT_FLAG = -999, which "
+              f"the BATADAL rules define as UNLABELED, not safe. They are "
+              f"scored as negatives here; any TNR/FPR from this file is "
+              f"therefore optimistic.", file=sys.stderr)
     return names, X, y
 
 
@@ -129,9 +153,15 @@ def attribution(names, agg, chan, eps_list, topk=5):
 
 
 def main(d="./batadal"):
-    _, Xtr, ytr = load(f"{d}/dataset03.csv")
-    nm, Xt, yt = load(f"{d}/test_dataset.csv")
+    stats = {}
+    _, Xtr, ytr = load(f"{d}/dataset03.csv", stats)
+    nm, Xt, yt = load(f"{d}/test_dataset.csv", stats)
     print("SENTINEL x BATADAL (live run, reference detector)")
+    print(f"data integrity: {stats.get('rows', 0)} rows loaded, "
+          f"{stats.get('coerced_x', 0)} sensor cells and "
+          f"{stats.get('coerced_y', 0)} labels coerced to 0, "
+          f"{stats.get('unlabeled', 0)} rows unlabeled (-999) "
+          f"({'clean' if not (stats.get('coerced_x') or stats.get('coerced_y')) else 'SEE WARNING ABOVE'})")
     print(f"clean {Xtr.shape[0]} rows | test {Xt.shape[0]} rows, "
           f"{int(yt.sum())} attack ticks, {len(episodes(yt))} episodes\n")
     print("DETECTION (threshold = 99.5th pct of clean scores)")

@@ -1,0 +1,34 @@
+# BATADAL attack ground truth.
+#
+# Transcribed from the official attack tables published by the BATADAL
+# organisers at http://www.batadal.net (Attacks_TestDataset and
+# Attacks_TrainingDataset2). Timings and descriptions are theirs; this file is
+# a machine-readable transcription for scoring, not a redistribution of the
+# datasets, which are not included in this repo -- run fetch_batadal.sh.
+#
+# Citation:
+#   R. Taormina, S. Galelli, N.O. Tippenhauer, A. Ostfeld, E. Salomons,
+#   "BATtle of the Attack Detection ALgorithms (BATADAL): Detailed Problem
+#   Description and Rules", 9 September 2016. http://www.batadal.net
+#
+# labeled_hours applies to dataset04 only. Where it is less than duration_h,
+# part of the attack is present in the data but carries ATT_FLAG = -999
+# (UNLABELED, not safe). Attacks 2 and 7 are entirely unlabelled: 134 attack
+# hours are in the file with no positive label on them. Scoring TNR or FPR
+# against dataset04 without accounting for this fabricates negatives.
+#
+dataset,attack_id,start,end,duration_h,labeled_hours,target,description
+dataset04,1,2016-09-13 23:00,2016-09-16 00:00,50,42,L_T7,Attacker changes L_T7 thresholds controlling PU10/PU11 by altering SCADA transmission to PLC9; low levels in T7. Replay attack on L_T7.
+dataset04,2,2016-09-26 11:00,2016-09-27 10:00,24,0,L_T7,Like attack 1; replay extended to PU10/PU11 flow and status.
+dataset04,3,2016-10-09 09:00,2016-10-11 20:00,60,60,L_T1,Alters L_T1 readings sent by PLC2 to PLC1 which reads a constant low level and keeps PU1/PU2 ON; overflow in T1. Polyline offset on L_T1.
+dataset04,4,2016-10-29 19:00,2016-11-02 16:00,94,37,L_T1,Like attack 3. Replay on L_T1, PU1/PU2 flow and status, and pump outlet pressure.
+dataset04,5,2016-11-26 17:00,2016-11-29 04:00,60,7,PU7,Working speed of PU7 reduced to 0.9 of nominal; lower water levels in T4.
+dataset04,6,2016-12-06 07:00,2016-12-10 04:00,94,73,PU7,Like attack 5 with speed reduced to 0.7. L_T4 drop concealed with replay attack.
+dataset04,7,2016-12-14 15:00,2016-12-19 04:00,110,0,L_T1,Like attack 6. Replay on L_T1 and PU1/PU2 flow and status.
+test,8,2017-01-16 09:00,2017-01-19 06:00,70,,L_T3,Attacker changes L_T3 thresholds controlling PU4/PU5 by gaining control of PLC3; low levels in T3. Replay on L_T3 and PU4/PU5 flow and status.
+test,9,2017-01-30 08:00,2017-02-02 00:00,65,,L_T2,Alters L_T2 readings arriving at PLC3 which reads a low level and keeps valve V2 OPEN; T2 overflows. Polyline offset on L_T2.
+test,10,2017-02-09 03:00,2017-02-10 09:00,31,,PU3,Malicious activation of pump PU3.
+test,11,2017-02-12 01:00,2017-02-13 07:00,31,,PU3,Similar to attack 10.
+test,12,2017-02-24 05:00,2017-02-28 08:00,100,,L_T2,Similar to attack 9. Replay on L_T2 and V2 flow and status plus V2 inlet and outlet pressure (P_J14 P_J422).
+test,13,2017-03-10 14:00,2017-03-13 21:00,80,,L_T7,Attacker changes L_T7 thresholds controlling PU10/PU11 by gaining control of PLC5 causing pumps to switch ON/OFF continuously. Replay on L_T7 PU10/PU11 flow and status plus inlet and outlet pressure; inlet concealment terminates before the others.
+test,14,2017-03-25 20:00,2017-03-27 01:00,30,,L_T4,Alteration of the T4 signal arriving at PLC6; overflow in T6.
