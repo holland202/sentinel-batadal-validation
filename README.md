@@ -1,9 +1,7 @@
 # SENTINEL x BATADAL — Public Benchmark Validation
 *Vincit Omnia Veritas — Truth Conquers All.*
 
-![SENTINEL x BATADAL results](sentinel_results.png)
-
-*Left panel y-axis is **tick recall** (attack ticks flagged / total attack ticks); the axis label reads "episode recall" and is wrong — it will be corrected when the figure is regenerated. Episode counts are in the table below.*
+![Evaluation pipeline: clean data calibrates the threshold, test data is scored, and the result is placed on BATADAL's 0-1 scale](docs/pipeline.svg)
 
 A minimal reference implementation of SENTINEL's detection method — two-window
 Jensen-Shannon divergence on per-channel sensor histograms — scored against the
@@ -47,6 +45,10 @@ misses attacks 4, 6 and 7 outright.
 
 ## Detection results (test set: 2,089 records, 7 attacks)
 
+![SENTINEL x BATADAL results](sentinel_results.png)
+
+*Left panel y-axis is **tick recall** (attack ticks flagged / total attack ticks); the axis label reads "episode recall" and is wrong — it will be corrected when the figure is regenerated. Episode counts are in the table below.*
+
 | Profile | samples/bin | Episodes | Tick recall | Precision | F1 |
 |---|---|---|---|---|---|
 | Conservative (w=100,b=12) | 8.33 | 2/7 | 20.9% | 31.5% | 0.251 |
@@ -59,6 +61,8 @@ different things, so a profile can detect more episodes at lower tick recall.
 
 The histogram under-sampling failure mode is real and reproduced on external
 labeled data: at 1.88 samples/bin, recall collapses to ~1%.
+
+![A two-window detector fires at the onset of an attack and goes silent once both windows sit inside it](docs/two-window.svg)
 
 **Tick recall understates any two-window detector by construction.** Once a
 sustained attack is older than 2W ticks, both windows sit inside the attacked
