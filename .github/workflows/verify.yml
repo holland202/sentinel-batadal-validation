@@ -1,0 +1,21 @@
+name: Verify
+
+on: [push, pull_request]
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install numpy
+        run: pip install numpy
+      - name: Smoke tests (11 dataset-free, must exit 0)
+        run: python3 test_smoke.py
+      - name: Math audit (exits 1 by design — pin the finding count)
+        run: |
+          python3 math_audit.py > audit_out.txt || true
+          cat audit_out.txt
+          grep -F "16 properties tested, 3 flaws found" audit_out.txt
