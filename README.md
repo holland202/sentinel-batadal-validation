@@ -112,6 +112,27 @@ data that count is zero, so the numbers above are not corrupted by it. Note
 `dataset04.csv` carries 3,958 unlabeled (`-999`) rows that older code scored as
 confirmed-normal; see `REPRODUCED.md`.
 
+## Second experiment: vera_batadal.py (certificate-based, NOT scored on S)
+
+A different method on the same data: ridge dynamics plus a split-conformal
+certificate, flagging attacks as certificate breaches. Predictions were
+registered before the first run; two of four failed and are kept.
+
+    P0 anti-vacuity  PASS  attack breach 54.5% vs clean 30.3%
+    P1 coverage      FAIL  0.697 vs nominal 0.90 (kept)
+    P2 separation    FAIL  1.8x vs registered 3x (kept)
+    P3 tick F1       0.437 vs this repo's 0.251
+
+**That F1 is not comparable to the table above, and does not rank this method
+against anything.** This repository argues that F1 is the wrong metric for
+BATADAL; that argument applies here too. vera_batadal.py has never been scored
+on S, has no episode-level detection, and has no TTD. Until it runs through
+`batadal_score.py` it is an experiment, not a result on the benchmark.
+
+The P1 failure is the more interesting number: coverage collapsed because the
+clean calibration year genuinely differs from the test year. The certificate
+did not break - it reported drift.
+
 ## Reproduce
 
     pip install -r requirements.txt --break-system-packages
