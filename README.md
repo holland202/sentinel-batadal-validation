@@ -157,7 +157,7 @@ the `data integrity` line, and your `batadal_score.py` output. Mismatches are
 more useful than matches and get logged in `REPRODUCED.md`.
 
 ## License
-Research use with attribution — see LICENSE.md. Commercial licensing:
-c.holland.arch@proton.me
+MIT — free for anyone to use, including commercially. The only condition is
+that the copyright notice stays with the code. See LICENSE.
 
 **Chad Edward Holland** (@holland202) · Sovereign Evolution · Oklahoma, USA
